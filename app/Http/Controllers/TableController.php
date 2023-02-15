@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TableStatus;
 use App\Models\Table;
 use Illuminate\Http\Request;
 use App\Http\Requests\TableStoreRequest;
@@ -15,7 +16,7 @@ class TableController extends Controller
      */
     public function index()
     {
-        $tables = Table::all();
+        $tables = Table::where('status', 'available')->get();
         return view('admin.tables.index', compact('tables'));
     }
 

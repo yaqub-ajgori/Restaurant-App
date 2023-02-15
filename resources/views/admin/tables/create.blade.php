@@ -1,5 +1,10 @@
 <x-admin-layout>
     <div class="max-w-7xl mx-auto p-2 mt-8">
+        @if(Session::has('success'))
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
+            {{session('success')}}
+        </div>
+    @endif
       <div class="bg-slate-100 p-4 rounded-lg">
           <form action="{{ route('admin.tables.store') }}" method="POST">
             @csrf

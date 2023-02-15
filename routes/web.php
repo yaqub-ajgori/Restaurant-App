@@ -6,22 +6,24 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Frontend\CategoryController as frontEndCategoryController;
+use App\Http\Controllers\Frontend\MenuController as frontendMenuController;
+use App\Http\Controllers\Frontend\ReservationController as frontendReservationController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReservationController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/categories', [frontEndCategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/{category}', [frontEndCategoryController::class, 'show'])->name('categories.show');
+Route::get('/menus', [frontendMenuController::class, 'index'])->name('menus.index');
+Route::get('reservation/step-one', [frontendReservationController::class, 'stepOne'])->name('reservation.step.one');
+Route::post('reservation/step-one', [frontendReservationController::class, 'stepOneStore'])->name('reservation.step.one.store');
+Route::get('reservation/step-two', [frontendReservationController::class, 'stepTwo'])->name('reservation.step.two');
+Route::post('reservation/step-two', [frontendReservationController::class, 'stepTwoStore'])->name('reservation.step.two.store');
+
+Route::get('/thankyou', [HomeController::class, 'thankyou'])->name('thankyou');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

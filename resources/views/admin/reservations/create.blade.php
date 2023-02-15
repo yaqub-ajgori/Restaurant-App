@@ -1,6 +1,11 @@
 <x-admin-layout>
     <div class="max-w-7xl mx-auto p-2 mt-8">
       <div class="bg-slate-100 p-4 rounded-lg">
+        @if(Session::has('error'))
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
+                {{session('error')}}
+            </div>
+        @endif
         <div>
             <form action="{{ route('admin.reservations.store') }}" method="post">
                 @csrf
@@ -53,8 +58,10 @@
                     <label for="table_id" class="block text-sm font-medium text-gray-700">Table</label>
                     <select name="table_id" id="table_id" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                         @foreach ($tables as $table)
-                        <option value="">Select One</option>
-                            <option value="{{ $table->id }}">{{ $table->name }}</option>
+                            <option
+                            value="{{ $table->id }}">{{ $table->name }}
+                            ( {{ $table->guests_number }} Guests)
+                        </option>
                         @endforeach
                     </select>
                     @error('table_id')
